@@ -4,7 +4,6 @@ import TopBar from "./TopBar";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { provider } from 'web3-core';
 import {Flex, Text} from "rebass";
 import { IFrameEthereumProvider } from '@ethvault/iframe-provider';
 
@@ -33,28 +32,30 @@ type DAPPMainProps = {
 
 function DAPPMain({ embed = false }: DAPPMainProps) {
     const [web3Instance, setWeb3Instance] = useState<Web3>();
-    const [provider, setProvider] = useState<provider>(null);
-    const [account, setAccount] = useState<string>(null);
+    const [provider, setProvider] = useState<any | null>(null);
+    const [account, setAccount] = useState<string | null>(null);
 
     useEffect(() => {
         if (!provider) {
             return;
         }
 
-        provider.on("accountsChanged", (accounts: string[]) => {
-            setAccount(accounts[0]);
+        provider.on("accountsChanged", () => {
+            web3.eth.getAccounts().then(accounts => {
+                setAccount(accounts[0]);
+            })
         });
 
-        provider.on("chainChanged", (chainId: number) => {
-            console.log(chainId);
+        provider.on("chainChanged", () => {
+
         });
 
-        provider.on("connect", (info: { chainId: number }) => {
-            console.log(info);
+        provider.on("connect", () => {
+
         });
 
-        provider.on("disconnect", (error: { code: number; message: string }) => {
-            console.log(error);
+        provider.on("disconnect", () => {
+
         });
 
         const web3 = new Web3(provider);

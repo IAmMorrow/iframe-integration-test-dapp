@@ -1,18 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import {Box, Button, Flex, Text} from "rebass"
-import Web3 from "web3";
-
-const TopBarContainer = styled.div`
-  width: 100%;
-  height: 60px;
-  background-color: black;
-  color: white;
-`;
 
 type TopBarProps = {
     onConnect: () => void,
-    account?: string,
+    account: string | null,
 };
 
 function TopBar({ onConnect, account }: TopBarProps) {
