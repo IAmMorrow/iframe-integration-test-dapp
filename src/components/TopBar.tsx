@@ -4,9 +4,10 @@ import {Box, Button, Flex, Text} from "rebass"
 type TopBarProps = {
     onConnect: () => void,
     account: string | null,
+    isConnecting: boolean,
 };
 
-function TopBar({ onConnect, account }: TopBarProps) {
+function TopBar({ onConnect, account, isConnecting }: TopBarProps) {
     return (
       <Flex
         px={3}
@@ -21,7 +22,7 @@ function TopBar({ onConnect, account }: TopBarProps) {
                   <Button variant="outline" color="black" onClick={onConnect}>
                       Connect
                   </Button>
-              ) : <Text fontSize={15} >{account}</Text>
+              ) : isConnecting ? <Text fontSize={15} >Loading ...</Text> : <Text fontSize={15} >{account}</Text>
           }
       </Flex>
     )

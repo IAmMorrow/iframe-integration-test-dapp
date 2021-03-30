@@ -31,9 +31,9 @@ type DAPPMainProps = {
 }
 
 function DAPPMain({ embed = false }: DAPPMainProps) {
-    const [web3Instance, setWeb3Instance] = useState<Web3>();
     const [provider, setProvider] = useState<any | null>(null);
     const [account, setAccount] = useState<string | null>(null);
+    const [isConnecting, setConnecting] = useState(false);
 
     useEffect(() => {
         if (!provider) {
@@ -60,10 +60,11 @@ function DAPPMain({ embed = false }: DAPPMainProps) {
 
         const web3 = new Web3(provider);
 
+        setConnecting(true);
         web3.eth.getAccounts().then(accounts => {
             setAccount(accounts[0]);
+            setConnecting(false);
         })
-        setWeb3Instance(web3);
     }, [provider]);
 
     useEffect(() => {
@@ -87,14 +88,17 @@ function DAPPMain({ embed = false }: DAPPMainProps) {
 
     return (
       <PageContainer>
-          <TopBar account={account} onConnect={handleConnect}/>
+          <TopBar account={account} onConnect={handleConnect} isConnecting={isConnecting} />
           <Flex
               px={3}
               py={2}
               flexDirection="column"
           >
               <Text>
-                  {`isConnected: ${!!web3Instance}`}
+                  {`isConnecting: ${isConnecting}`}
+              </Text>
+              <Text>
+                  {`isConnected: ${!!account}`}
               </Text>
               <Text>
                   {`isIframe: ${embed}`}
