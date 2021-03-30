@@ -66,8 +66,9 @@ function DAPPMain({ embed = false }: DAPPMainProps) {
                 setAccount(accounts[0]);
                 setConnecting(false);
             })
-            .catch(() => {
+            .catch((err) => {
                 setConnecting(false);
+                console.log(err);
             })
     }, [provider]);
 
