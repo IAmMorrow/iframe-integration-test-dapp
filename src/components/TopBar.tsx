@@ -18,11 +18,11 @@ function TopBar({ onConnect, account, isConnecting }: TopBarProps) {
         <Text p={2} fontWeight='bold'>Ledger Live test DAPP</Text>
         <Box mx='auto' />
           {
-              !account ? (
+              !account ? isConnecting ? <Text fontSize={15} >Loading ...</Text> : (
                   <Button variant="outline" color="black" onClick={onConnect}>
                       Connect
                   </Button>
-              ) : isConnecting ? <Text fontSize={15} >Loading ...</Text> : <Text fontSize={15} >{account}</Text>
+              ) : <Text fontSize={15} >{account}</Text>
           }
       </Flex>
     )
