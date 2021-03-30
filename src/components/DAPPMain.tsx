@@ -61,10 +61,14 @@ function DAPPMain({ embed = false }: DAPPMainProps) {
         const web3 = new Web3(provider);
 
         setConnecting(true);
-        web3.eth.getAccounts().then(accounts => {
-            setAccount(accounts[0]);
-            setConnecting(false);
-        })
+        web3.eth.getAccounts()
+            .then(accounts => {
+                setAccount(accounts[0]);
+                setConnecting(false);
+            })
+            .catch(() => {
+                setConnecting(false);
+            })
     }, [provider]);
 
     useEffect(() => {
